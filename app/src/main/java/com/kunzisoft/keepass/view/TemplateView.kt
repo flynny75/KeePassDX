@@ -114,9 +114,9 @@ class TemplateView @JvmOverloads constructor(context: Context,
     }
 
     override fun buildChipsView(templateAttribute: TemplateAttribute,
-                      field: Field) : ChipGroup?{
+                      field: Field) : CustomChipGroup?{
         return context?.let {
-            ChipGroup(context)
+            CustomChipGroup(context)
         }
     }
 

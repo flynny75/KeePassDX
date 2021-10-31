@@ -108,6 +108,10 @@ class EntryEditFragment: DatabaseFragment() {
             setOnDateInstantClickListener { dateInstant ->
                 mEntryEditViewModel.requestDateTimeSelection(dateInstant)
             }
+            setOnAddTagClickListener {
+                //TODO show dialog to add tag
+                //invalidate?
+            }
         }
 
         if (savedInstanceState != null) {

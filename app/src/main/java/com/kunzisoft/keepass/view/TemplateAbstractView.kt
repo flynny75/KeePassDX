@@ -8,6 +8,7 @@ import android.os.Parcelable
 import android.os.Parcelable.Creator
 import android.util.AttributeSet
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -264,7 +265,7 @@ abstract class TemplateAbstractView<
                                              field: Field): TDateTimeView?
 
     protected abstract fun buildChipsView(templateAttribute: TemplateAttribute,
-                                          field: Field): ChipGroup?
+                                          field: Field): CustomChipGroup?
 
     abstract fun getActionImageView(): View?
 
@@ -340,16 +341,15 @@ abstract class TemplateAbstractView<
                                  chipValues: ArrayList<String>,
                                  showEmptyFields: Boolean){
         try {
-            val fieldView: ChipGroup = findViewWithTag(fieldTag)
+            val fieldView: CustomChipGroup = findViewWithTag(fieldTag)
             if (!showEmptyFields && !chipValues.any()) {
                 fieldView.visibility = GONE
             }
 
-            chipValues.forEach { v ->
-                val c = Chip(context)
-                c.text = v
-                fieldView.addView(c)
-            }
+            fieldView.addChip(chipValues, removeTag = {tag->
+                mEntryInfo?.tags?.mTags?.remove(tag)
+            })
+
 
         } catch(e: Exception) {
             Log.e(TAG, "Unable to populate chips view", e)

@@ -37,6 +37,11 @@ class TemplateEditView @JvmOverloads constructor(context: Context,
         this.mOnPasswordGenerationActionClickListener = listener
     }
 
+    private var mOnAddTagClickListener: (()->Unit)? = null
+    fun setOnAddTagClickListener(listener: (()->Unit)?){
+        mOnAddTagClickListener = listener
+    }
+
     private var mOnDateInstantClickListener: ((DateInstant) -> Unit)? = null
     fun setOnDateInstantClickListener(listener: ((DateInstant) -> Unit)?) {
         this.mOnDateInstantClickListener = listener
@@ -90,8 +95,14 @@ class TemplateEditView @JvmOverloads constructor(context: Context,
     }
 
     override fun buildChipsView(templateAttribute: TemplateAttribute,
-                                    field: Field): ChipGroup? {
-        return null
+                                field: Field) : CustomChipGroup?{
+        return context?.let {
+            val c = CustomChipGroup(context){
+                mOnAddTagClickListener?.invoke()
+            }
+            c.showCloseIcon = true
+            c
+        }
     }
 
     private fun setActionClick(templateAttribute: TemplateAttribute,
