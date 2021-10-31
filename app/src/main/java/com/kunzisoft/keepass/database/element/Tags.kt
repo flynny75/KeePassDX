@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 class Tags: Parcelable {
 
-    private val mTags = ArrayList<String>()
+    val mTags = ArrayList<String>()
 
     constructor()
 

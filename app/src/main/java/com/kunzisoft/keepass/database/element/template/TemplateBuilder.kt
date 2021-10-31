@@ -16,6 +16,9 @@ class TemplateBuilder {
         TemplateAttributeOption().apply {
             setNumberLinesToMany()
         })
+    private val tagsAttribute = TemplateAttribute(
+            TemplateField.LABEL_TAGS,
+            TemplateAttributeType.CHIPS)
     private val holderAttribute = TemplateAttribute(TemplateField.LABEL_HOLDER, TemplateAttributeType.TEXT)
     private val numberAttribute = TemplateAttribute(TemplateField.LABEL_NUMBER, TemplateAttributeType.TEXT)
     private val cvvAttribute = TemplateAttribute(TemplateField.LABEL_CVV, TemplateAttributeType.TEXT, true)
@@ -98,6 +101,20 @@ class TemplateBuilder {
                 TemplateField.LABEL_NOTES,
                 IconImage(IconImageStandard(IconImageStandard.LIST_ID)),
                 sections)
+        }
+
+    val tags: Template
+        get() {
+            val sections = mutableListOf<TemplateSection>()
+            val mainSection = TemplateSection(mutableListOf<TemplateAttribute>().apply {
+                add(tagsAttribute)
+            })
+            sections.add(mainSection)
+            return Template(
+                    UUID.randomUUID(),
+                    TemplateField.LABEL_TAGS,
+                    IconImage(IconImageStandard(IconImageStandard.LIST_ID)),
+                    sections)
         }
 
     val idCard: Template

@@ -15,6 +15,7 @@ object TemplateField {
     const val LABEL_URL = "URL"
     const val LABEL_EXPIRATION = "Expires"
     const val LABEL_NOTES = "Notes"
+    const val LABEL_TAGS = "Tags"
 
     const val LABEL_DEBIT_CREDIT_CARD = "Debit / Credit Card"
     const val LABEL_HOLDER = "Holder"

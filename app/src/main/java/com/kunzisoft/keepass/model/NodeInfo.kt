@@ -3,12 +3,14 @@ package com.kunzisoft.keepass.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.kunzisoft.keepass.database.element.DateInstant
+import com.kunzisoft.keepass.database.element.Tags
 import com.kunzisoft.keepass.database.element.icon.IconImage
 
 open class NodeInfo() : Parcelable {
 
     var title: String = ""
     var icon: IconImage = IconImage()
+    var tags: Tags = Tags()
     var creationTime: DateInstant = DateInstant()
     var lastModificationTime: DateInstant = DateInstant()
     var expires: Boolean = false
@@ -17,6 +19,7 @@ open class NodeInfo() : Parcelable {
     constructor(parcel: Parcel) : this() {
         title = parcel.readString() ?: title
         icon = parcel.readParcelable(IconImage::class.java.classLoader) ?: icon
+        tags = parcel.readParcelable(Tags::class.java.classLoader) ?: tags
         creationTime = parcel.readParcelable(DateInstant::class.java.classLoader) ?: creationTime
         lastModificationTime = parcel.readParcelable(DateInstant::class.java.classLoader) ?: lastModificationTime
         expires = parcel.readInt() != 0
@@ -26,6 +29,7 @@ open class NodeInfo() : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeParcelable(icon, flags)
+        parcel.writeParcelable(tags, flags)
         parcel.writeParcelable(creationTime, flags)
         parcel.writeParcelable(lastModificationTime, flags)
         parcel.writeInt(if (expires) 1 else 0)
@@ -42,6 +46,7 @@ open class NodeInfo() : Parcelable {
 
         if (title != other.title) return false
         if (icon != other.icon) return false
+        if (tags != other.tags) return false
         if (creationTime != other.creationTime) return false
         if (lastModificationTime != other.lastModificationTime) return false
         if (expires != other.expires) return false
@@ -53,6 +58,7 @@ open class NodeInfo() : Parcelable {
     override fun hashCode(): Int {
         var result = title.hashCode()
         result = 31 * result + icon.hashCode()
+        result = 31 * result + tags.hashCode()
         result = 31 * result + creationTime.hashCode()
         result = 31 * result + lastModificationTime.hashCode()
         result = 31 * result + expires.hashCode()

@@ -183,6 +183,7 @@ abstract class TemplateEngine(private val mDatabase: DatabaseKDBX) {
                 templateBuilder.email,
                 templateBuilder.wifi,
                 templateBuilder.notes,
+                templateBuilder.tags,
                 templateBuilder.idCard,
                 templateBuilder.creditCard,
                 templateBuilder.bank,

@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.IdRes
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.Field
@@ -177,6 +179,9 @@ abstract class TemplateAbstractView<
             templateAttribute.label.equals(TemplateField.LABEL_NOTES, true) -> {
                 fieldTag = FIELD_NOTES_TAG
             }
+            templateAttribute.label.equals(TemplateField.LABEL_TAGS, true) -> {
+                fieldTag = FIELD_TAGS_TAG
+            }
             else -> {
                 fieldTag = FIELD_CUSTOM_TAG
             }
@@ -223,6 +228,9 @@ abstract class TemplateAbstractView<
             TemplateAttributeType.DATETIME -> {
                 buildDataTimeView(templateAttribute, field) as View?
             }
+            TemplateAttributeType.CHIPS -> {
+                buildChipsView(templateAttribute, field)
+            }
             TemplateAttributeType.DIVIDER -> null
         }
         // Custom id defined by field name, use getViewByField(field: Field) to retrieve it
@@ -254,6 +262,9 @@ abstract class TemplateAbstractView<
 
     protected abstract fun buildDataTimeView(templateAttribute: TemplateAttribute,
                                              field: Field): TDateTimeView?
+
+    protected abstract fun buildChipsView(templateAttribute: TemplateAttribute,
+                                          field: Field): ChipGroup?
 
     abstract fun getActionImageView(): View?
 
@@ -324,6 +335,27 @@ abstract class TemplateAbstractView<
         }
     }
 
+    private fun populateChipView(fieldTag: String,
+                                 templateAttribute: TemplateAttribute,
+                                 chipValues: ArrayList<String>,
+                                 showEmptyFields: Boolean){
+        try {
+            val fieldView: ChipGroup = findViewWithTag(fieldTag)
+            if (!showEmptyFields && !chipValues.any()) {
+                fieldView.visibility = GONE
+            }
+
+            chipValues.forEach { v ->
+                val c = Chip(context)
+                c.text = v
+                fieldView.addView(c)
+            }
+
+        } catch(e: Exception) {
+            Log.e(TAG, "Unable to populate chips view", e)
+        }
+    }
+
     /**
      * Return empty custom fields
      */
@@ -355,6 +387,10 @@ abstract class TemplateAbstractView<
                 Template.NOTES_ATTRIBUTE,
                 entryInfo.notes,
                 showEmptyFields)
+            populateChipView(FIELD_TAGS_TAG,
+                    Template.TAGS_ATTRIBUTE,
+                    entryInfo.tags.mTags,
+                    showEmptyFields)
 
             customFieldsContainerView.removeAllViews()
             val emptyCustomFields = mutableListOf<ViewField>().also { it.addAll(mViewFields) }
@@ -696,6 +732,7 @@ abstract class TemplateAbstractView<
         const val FIELD_URL_TAG = "FIELD_URL_TAG"
         const val FIELD_EXPIRES_TAG = "FIELD_EXPIRES_TAG"
         const val FIELD_NOTES_TAG = "FIELD_NOTES_TAG"
+        const val FIELD_TAGS_TAG = "FIELD_TAGS_TAG"
         const val FIELD_CUSTOM_TAG = "FIELD_CUSTOM_TAG"
 
         private val TAG = TemplateAbstractView::class.java.name

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.view.isVisible
+import com.google.android.material.chip.ChipGroup
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.Field
 import com.kunzisoft.keepass.database.element.security.ProtectedString
@@ -109,6 +110,13 @@ class TemplateView @JvmOverloads constructor(context: Context,
                     activation = false
                 }
             }
+        }
+    }
+
+    override fun buildChipsView(templateAttribute: TemplateAttribute,
+                      field: Field) : ChipGroup?{
+        return context?.let {
+            ChipGroup(context)
         }
     }
 

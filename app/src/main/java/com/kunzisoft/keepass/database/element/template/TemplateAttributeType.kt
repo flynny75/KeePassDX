@@ -21,6 +21,7 @@ package com.kunzisoft.keepass.database.element.template
 enum class TemplateAttributeType(val typeString: String) {
     TEXT("text"),
     LIST("list"),
+    CHIPS("chips"),
     DATETIME("datetime"),
     DIVIDER("divider");
 
@@ -31,6 +32,7 @@ enum class TemplateAttributeType(val typeString: String) {
                 label.contains(LIST.typeString, true) -> LIST
                 label.contains(DATETIME.typeString, true) -> DATETIME
                 label.contains(DIVIDER.typeString, true) -> DIVIDER
+                label.contains(CHIPS.typeString, true) -> CHIPS
                 else -> TEXT
             }
         }

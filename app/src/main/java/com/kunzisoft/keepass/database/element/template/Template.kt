@@ -142,6 +142,13 @@ class Template : Parcelable {
             TemplateAttributeOption().apply {
                 setNumberLinesToMany()
             })
+        val TAGS_ATTRIBUTE = TemplateAttribute(
+                TemplateField.LABEL_TAGS,
+                TemplateAttributeType.CHIPS,
+                false,
+                TemplateAttributeOption().apply {
+                    setNumberLinesToMany()
+                })
 
         val STANDARD: Template
             get() {
@@ -152,6 +159,7 @@ class Template : Parcelable {
                     add(URL_ATTRIBUTE)
                     add(EXPIRATION_ATTRIBUTE)
                     add(NOTES_ATTRIBUTE)
+                    add(TAGS_ATTRIBUTE)
                 })
                 sections.add(mainSection)
                 return Template(
