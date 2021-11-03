@@ -81,7 +81,8 @@ class EntryEditActivity : DatabaseLockActivity(),
         DatePickerDialog.OnDateSetListener,
         TimePickerDialog.OnTimeSetListener,
         FileTooBigDialogFragment.ActionChooseListener,
-        ReplaceFileDialogFragment.ActionChooseListener {
+        ReplaceFileDialogFragment.ActionChooseListener,
+        EntryTagDialogFragment.EntryAddTagListener{
 
     // Views
     private var coordinatorLayout: CoordinatorLayout? = null
@@ -234,6 +235,10 @@ class EntryEditActivity : DatabaseLockActivity(),
             GeneratePasswordDialogFragment
                     .getInstance(passwordField)
                     .show(supportFragmentManager, "PasswordGeneratorFragment")
+        }
+
+        mEntryEditViewModel.onRequestAddTag.observe(this){ newTag ->
+            EntryTagDialogFragment.getInstance(newTag).show(supportFragmentManager, "AddTagFragment")
         }
 
         mEntryEditViewModel.requestCustomFieldEdition.observe(this) { field ->
@@ -451,6 +456,13 @@ class EntryEditActivity : DatabaseLockActivity(),
 
     override fun onDeleteCustomFieldApproved(oldField: Field) {
         mEntryEditViewModel.removeCustomField(oldField)
+    }
+
+    /**
+     * Add a new tag
+     */
+    override fun AddTag(newTag:String){
+        mEntryEditViewModel.addTag(newTag)
     }
 
     /**

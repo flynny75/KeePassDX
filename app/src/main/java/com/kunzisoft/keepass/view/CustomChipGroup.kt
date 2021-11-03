@@ -8,21 +8,16 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kunzisoft.keepass.R
 
-class CustomChipGroup @JvmOverloads constructor(context: Context, private val addTag: (() -> Unit)? = null)
+class CustomChipGroup @JvmOverloads constructor(context: Context,
+                                                private val addTag: (() -> Unit)? = null,
+                                                private val removeTag: ((tag:String) -> Unit)? = null)
     : ChipGroup(context, null, 0){
 
     var showCloseIcon: Boolean = false
 
-    fun addChip(tags: ArrayList<String>, removeTag: (tag: String) -> Unit){
+    fun addChips(tags: ArrayList<String>){
         tags.forEach {tagValue->
-            val c = Chip(context, null, 0)
-            c.isCloseIconVisible = showCloseIcon
-            c.text = tagValue
-            c.setOnCloseIconClickListener{
-                removeTag(tagValue)
-                removeView(c)
-            }
-            addView(c)
+            addChip(tagValue)
         }
 
         if(showCloseIcon){
@@ -34,5 +29,16 @@ class CustomChipGroup @JvmOverloads constructor(context: Context, private val ad
             }
             addView(c)
         }
+    }
+
+    fun addChip(tag: String){
+        val c = Chip(context, null, 0)
+        c.isCloseIconVisible = showCloseIcon
+        c.text = tag
+        c.setOnCloseIconClickListener{
+            removeTag?.invoke(tag)
+            removeView(c)
+        }
+        addView(c)
     }
 }

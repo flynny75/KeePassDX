@@ -8,7 +8,6 @@ import android.os.Parcelable
 import android.os.Parcelable.Creator
 import android.util.AttributeSet
 import android.util.Log
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +15,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.IdRes
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.Field
@@ -337,7 +334,6 @@ abstract class TemplateAbstractView<
     }
 
     private fun populateChipView(fieldTag: String,
-                                 templateAttribute: TemplateAttribute,
                                  chipValues: ArrayList<String>,
                                  showEmptyFields: Boolean){
         try {
@@ -346,9 +342,7 @@ abstract class TemplateAbstractView<
                 fieldView.visibility = GONE
             }
 
-            fieldView.addChip(chipValues, removeTag = {tag->
-                mEntryInfo?.tags?.mTags?.remove(tag)
-            })
+            fieldView.addChips(chipValues)
 
 
         } catch(e: Exception) {
@@ -388,7 +382,6 @@ abstract class TemplateAbstractView<
                 entryInfo.notes,
                 showEmptyFields)
             populateChipView(FIELD_TAGS_TAG,
-                    Template.TAGS_ATTRIBUTE,
                     entryInfo.tags.mTags,
                     showEmptyFields)
 

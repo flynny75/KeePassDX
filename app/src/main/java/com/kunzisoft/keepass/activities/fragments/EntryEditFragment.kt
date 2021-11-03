@@ -109,8 +109,7 @@ class EntryEditFragment: DatabaseFragment() {
                 mEntryEditViewModel.requestDateTimeSelection(dateInstant)
             }
             setOnAddTagClickListener {
-                //TODO show dialog to add tag
-                //invalidate?
+                mEntryEditViewModel.requestAddNewTag()
             }
         }
 
@@ -123,6 +122,10 @@ class EntryEditFragment: DatabaseFragment() {
         mEntryEditViewModel.onTemplateChanged.observe(viewLifecycleOwner) { template ->
             this.mTemplate = template
             templateView.setTemplate(template)
+        }
+
+        mEntryEditViewModel.onTagAdded.observe(viewLifecycleOwner) { newTag ->
+            templateView.addTag(newTag)
         }
 
         mEntryEditViewModel.templatesEntry.observe(viewLifecycleOwner) { templateEntry ->

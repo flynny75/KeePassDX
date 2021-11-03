@@ -41,6 +41,12 @@ class EntryEditViewModel: NodeEditViewModel() {
     val onPasswordSelected : LiveData<Field> get() = _onPasswordSelected
     private val _onPasswordSelected = SingleLiveEvent<Field>()
 
+    val onRequestAddTag : LiveData<String> get() = _onRequestAddTag
+    private val _onRequestAddTag = SingleLiveEvent<String>()
+
+    val onTagAdded : LiveData<String> get() = _onTagAdded
+    private val _onTagAdded = SingleLiveEvent<String>()
+
     val requestCustomFieldEdition : LiveData<Field> get() = _requestCustomFieldEdition
     private val _requestCustomFieldEdition = SingleLiveEvent<Field>()
     val onCustomFieldEdited : LiveData<FieldEdition> get() = _onCustomFieldEdited
@@ -251,6 +257,15 @@ class EntryEditViewModel: NodeEditViewModel() {
 
     fun requestPasswordSelection(passwordField: Field) {
         _requestPasswordSelection.value = passwordField
+    }
+
+    fun requestAddNewTag(){
+        _onRequestAddTag.value = "new tag"
+    }
+
+    fun addTag(tag:String){
+        mEntry?.tags?.mTags?.add(tag)
+        _onTagAdded.value = tag
     }
 
     fun selectPassword(passwordField: Field) {

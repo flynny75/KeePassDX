@@ -97,12 +97,20 @@ class TemplateEditView @JvmOverloads constructor(context: Context,
     override fun buildChipsView(templateAttribute: TemplateAttribute,
                                 field: Field) : CustomChipGroup?{
         return context?.let {
-            val c = CustomChipGroup(context){
+            val c = CustomChipGroup(context, {
                 mOnAddTagClickListener?.invoke()
-            }
+            }, {
+                mEntryInfo?.tags?.mTags?.remove(it)
+            })
+
             c.showCloseIcon = true
             c
         }
+    }
+
+    fun addTag(tag:String){
+        val tagView = getFieldViewById(TemplateField.LABEL_TAGS.hashCode()) as CustomChipGroup
+        tagView.addChip(tag)
     }
 
     private fun setActionClick(templateAttribute: TemplateAttribute,
