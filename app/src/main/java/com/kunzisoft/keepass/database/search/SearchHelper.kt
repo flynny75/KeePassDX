@@ -163,6 +163,10 @@ class SearchHelper {
                 if (hexString != null && hexString.contains(searchQuery, true))
                     return true
             }
+            if (searchParameters.searchInTags) {
+                if (entry.tags.mTags.any{it.isNotEmpty() && it.contains(searchParameters.searchQuery, true)})
+                    return true
+            }
             if (searchParameters.searchInOther) {
                 entry.getExtraFields().forEach { field ->
                     if (field.name != OTP_FIELD
