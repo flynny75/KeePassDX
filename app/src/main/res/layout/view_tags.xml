@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tags_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tags"
+        style="@style/KeepassDXStyle.TextAppearance.LabelTextStyle" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/tags_chipgroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tags_infolabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No tags"
+        style="@style/KeepassDXStyle.TextAppearance.Large" />
+
+</LinearLayout>

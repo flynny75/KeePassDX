@@ -342,8 +342,7 @@ abstract class TemplateAbstractView<
                 fieldView.visibility = GONE
             }
 
-            fieldView.addChips(chipValues)
-
+            fieldView.addChips(chipValues.filter { cv -> cv.isNotBlank() })
 
         } catch(e: Exception) {
             Log.e(TAG, "Unable to populate chips view", e)

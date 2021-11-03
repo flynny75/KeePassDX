@@ -43,7 +43,6 @@ class EntryEditViewModel: NodeEditViewModel() {
 
     val onRequestAddTag : LiveData<String> get() = _onRequestAddTag
     private val _onRequestAddTag = SingleLiveEvent<String>()
-
     val onTagAdded : LiveData<String> get() = _onTagAdded
     private val _onTagAdded = SingleLiveEvent<String>()
 
